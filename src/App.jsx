@@ -1,8 +1,67 @@
-// Uygulamanın ana bileşeni, Tailwind'in çalıştığını gösteren başlık ekranını render eder
+import { useState, useEffect } from 'react'
+import TodoForm from './components/TodoForm'
+import TodoList from './components/TodoList'
+
+const STORAGE_KEY = 'todos'
+
+// Uygulamanın ana bileşeni, todo state'ini tutar ve alt bileşenlere props ile aktarır
 function App() {
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    return saved ? JSON.parse(saved) : []
+  })
+
+  // todos her değiştiğinde güncel listeyi localStorage'a yazar
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+  }, [todos])
+
+  // Yeni todo'yu modele uygun oluşturup listenin başına ekler
+  function addTodo(title) {
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title,
+      completed: false,
+      createdAt: new Date().toISOString(),
+    }
+    setTodos((prev) => [newTodo, ...prev])
+  }
+
+  // Verilen id'ye sahip todo'nun tamamlanma durumunu tersine çevirir
+  function toggleTodo(id) {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    )
+  }
+
+  // Verilen id'ye sahip todo'nun başlığını yeni değerle günceller
+  function updateTodo(id, newTitle) {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, title: newTitle } : todo)),
+    )
+  }
+
+  // Verilen id'ye sahip todo'yu listeden kaldırır
+  function deleteTodo(id) {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id))
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <h1 className="text-4xl font-bold text-purple-600">TODO Uygulaması</h1>
+    <div className="min-h-screen bg-gray-50 px-4 py-10">
+      <div className="mx-auto flex max-w-md flex-col gap-6">
+        <h1 className="text-center text-4xl font-bold text-purple-600">
+          TODO Uygulaması
+        </h1>
+        <TodoForm onAdd={addTodo} />
+        <TodoList
+          todos={todos}
+          onToggle={toggleTodo}
+          onUpdate={updateTodo}
+          onDelete={deleteTodo}
+        />
+      </div>
     </div>
   )
 }
