@@ -20,11 +20,11 @@ function TodoForm({ onAdd }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Yeni görev ekle..."
-        className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-gray-800 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+        className="flex-1 min-w-0 rounded-lg border border-tokyo-border bg-tokyo-surface px-4 py-2.5 text-tokyo-text outline-none transition-colors placeholder:text-tokyo-muted focus:border-tokyo-purple focus:ring-1 focus:ring-tokyo-purple"
       />
       <button
         type="submit"
-        className="rounded-md bg-purple-600 px-4 py-2 font-medium text-white hover:bg-purple-700"
+        className="shrink-0 rounded-lg bg-tokyo-purple px-4 py-2.5 font-medium text-tokyo-bg transition-colors hover:bg-tokyo-blue active:scale-95"
       >
         Ekle
       </button>

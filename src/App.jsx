@@ -49,9 +49,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10">
-      <div className="mx-auto flex max-w-md flex-col gap-6">
-        <h1 className="text-center text-4xl font-bold text-purple-600">
+    <div className="min-h-screen bg-tokyo-bg px-4 py-10 sm:py-16">
+      <div className="mx-auto flex w-full max-w-md flex-col gap-6">
+        <h1 className="text-center text-3xl font-bold tracking-tight text-tokyo-purple sm:text-4xl">
           TODO Uygulaması
         </h1>
         <TodoForm onAdd={addTodo} />

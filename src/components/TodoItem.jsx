@@ -23,62 +23,74 @@ function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
 
   if (isEditing) {
     return (
-      <li className="flex items-center gap-2 rounded-md border border-purple-300 bg-white px-3 py-2 shadow-sm">
+      <li className="flex items-center gap-2 rounded-lg border border-tokyo-purple bg-tokyo-surface px-3 py-2.5 transition-colors">
         <input
           type="text"
           value={editTitle}
           onChange={(e) => setEditTitle(e.target.value)}
           autoFocus
-          className="flex-1 rounded border border-gray-300 px-2 py-1 outline-none focus:border-purple-500"
+          className="min-w-0 flex-1 rounded-md border border-tokyo-border bg-tokyo-bg px-3 py-1.5 text-tokyo-text outline-none focus:border-tokyo-purple"
         />
         <button
           type="button"
           onClick={handleSave}
-          className="rounded bg-green-600 px-2 py-1 text-xs font-medium text-white hover:bg-green-700"
+          title="Kaydet"
+          aria-label="Kaydet"
+          className="shrink-0 rounded-md p-2.5 text-lg leading-none text-tokyo-green transition-colors hover:bg-tokyo-green/10"
         >
-          Kaydet
+          ✓
         </button>
         <button
           type="button"
           onClick={handleCancel}
-          className="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300"
+          title="İptal"
+          aria-label="İptal"
+          className="shrink-0 rounded-md p-2.5 text-lg leading-none text-tokyo-muted transition-colors hover:bg-tokyo-border"
         >
-          İptal
+          ✕
         </button>
       </li>
     )
   }
 
   return (
-    <li className="flex items-center justify-between gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 shadow-sm">
-      <div className="flex items-center gap-2">
+    <li className="group flex items-center justify-between gap-2 rounded-lg border border-tokyo-border bg-tokyo-surface px-3 py-2.5 transition-colors hover:border-tokyo-purple/50">
+      <div className="flex min-w-0 items-center gap-3">
         <input
           type="checkbox"
           checked={todo.completed}
           onChange={() => onToggle(todo.id)}
-          className="h-4 w-4 accent-purple-600"
+          className="h-5 w-5 shrink-0 cursor-pointer appearance-none rounded border-2 border-tokyo-border bg-tokyo-bg transition-colors checked:border-tokyo-purple checked:bg-tokyo-purple"
         />
-        <div>
-          <p className={todo.completed ? 'text-gray-400 line-through' : 'text-gray-800'}>
+        <div className="min-w-0">
+          <p
+            className={`truncate ${
+              todo.completed ? 'text-tokyo-muted line-through' : 'text-tokyo-text'
+            }`}
+          >
             {todo.title}
           </p>
-          <p className="text-xs text-gray-400">{formattedDate}</p>
+          <p className="text-xs text-tokyo-muted">{formattedDate}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1 opacity-80 transition-opacity group-hover:opacity-100">
         <button
           type="button"
           onClick={() => setIsEditing(true)}
-          className="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200"
+          title="Düzenle"
+          aria-label="Düzenle"
+          className="rounded-md p-2.5 text-lg leading-none text-tokyo-blue transition-colors hover:bg-tokyo-blue/10"
         >
-          Düzenle
+          ✎
         </button>
         <button
           type="button"
           onClick={() => onDelete(todo.id)}
-          className="rounded bg-red-100 px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-200"
+          title="Sil"
+          aria-label="Sil"
+          className="rounded-md p-2.5 text-lg leading-none text-tokyo-red transition-colors hover:bg-tokyo-red/10"
         >
-          Sil
+          ✕
         </button>
       </div>
     </li>
